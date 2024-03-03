@@ -305,7 +305,7 @@ export default DeleteModal;
 
 ## CodeSandbox에서 결과 확인하기
 
-<iframe src="https://codesandbox.io/p/devbox/react-modal-fzgfrg?file=%2Fsrc%2FApp.tsx&embed=1&showConsole=true"
+<iframe src="https://codesandbox.io/p/devbox/determined-moore-fzgfrg?file=%2Fsrc%2FApp.tsx&embed=1"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
      title="react modal"
      allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
