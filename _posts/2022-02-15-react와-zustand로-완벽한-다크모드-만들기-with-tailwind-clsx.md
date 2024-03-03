@@ -2,11 +2,12 @@
 layout: post
 title: React와 Zustand로 완벽한 다크모드 만들기 with tailwind, clsx
 date: 2022-02-15 20:57 +0900
+lastmod: 2024-02-14 15:38:56 +0900
+
 categories: [react]
 tags: [react, zustand, tailwindcss, clsx, darkMode, theme]
 image:
   path: https://res.cloudinary.com/dxesudkxn/image/upload/v1707841659/blog/ip8lajvkr16eu1zfoq7k.gif
-  alt: thumbnail
 ---
 
 사이드 프로젝트에서 다크 모드를 리팩토링하는 중에, 기존 코드의 지저분함이 진행을 어렵게 만들고 있다고 느꼈습니다. 그래서 **"처음부터 완벽한 코드를 작성해보자"** 라는 생각이 들었고,

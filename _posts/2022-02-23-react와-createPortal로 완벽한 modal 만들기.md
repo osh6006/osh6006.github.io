@@ -5,6 +5,8 @@ date: 2022-02-23 16:23 +0900
 lastmod: 2024-03-02 15:38:56 +0900
 categories: [react]
 tags: [react, createPortal, modal]
+image:
+  path: https://res.cloudinary.com/dxesudkxn/image/upload/v1709435616/blog/wihgoguyyxgci8tm9ibe.gif
 ---
 
 제 사이드 프로젝트에서 사용 중인 `Modal` 구현 라이브러리를 리팩토링하고자 했던 이유는 기존 라이브러리가 제공하는 다양한 기능 중에서 필요한 부분만 사용하고 있었기 때문이었습니다. 이로 인해 프로젝트에 불필요한 코드와 의존성이 증가하는 문제가 있었습니다.
@@ -65,7 +67,7 @@ import { createPortal } from "react-dom";
 
 ## 우리가 실습할 프로젝트
 
-이제 드디어 우리의 프로젝트를 만들 차례입니다! 기본적인 `UI`는 위의 결과 화면 처럼 만들고, 개발 환경으로는 `codesandbox`와 `typescript`를 사용하고, 기본적인 `CSS`는 여러분들이 복사하기 쉽게, `inline` 스타일로 지정하여 사용하겠습니다!
+이제 드디어 우리의 프로젝트를 만들 차례입니다! 기본적인 `UI`는 위의 결과 화면 처럼 만들고, 개발 환경으로는 `codesandbox`와 `typescript`를 사용하고, 기본적인 `CSS`는 리액트에서 제공하는 `module.css`를 사용하겠습니다.
 
 ### 요구사항 정의 (필수!)
 
