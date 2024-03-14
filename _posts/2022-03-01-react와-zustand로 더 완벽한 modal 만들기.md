@@ -2,11 +2,11 @@
 layout: post
 title: react와-zustand로 더 완벽한 modal 만들기
 date: 2022-03-01 16:23 +0900
-lastmod: 2024-03-14 09:38 +0900
+lastmod: 2024-03-14 09:38:13 +0900
 categories: [react, typescript]
 tags: [react, zustand, modal, typescript, tailwind]
-# image:
-#   path: https://res.cloudinary.com/dxesudkxn/image/upload/v1709435616/blog/wihgoguyyxgci8tm9ibe.gif
+image:
+  path: https://res.cloudinary.com/dxesudkxn/image/upload/v1710429822/blog/rdsaeokobe2xjgvi6jqw.gif
 ---
 
 이전 포스팅에서 `react`의 `createPortal`을 활용하여 modal을 구성해 보았습니다. 사용하기가 매우 편하고 쉽지만 몇 가지 단점이 있었고 이를 보완하고자 전역 상태로 `modal`을 관리하는 방법을 소개하고자 합니다.
@@ -362,16 +362,16 @@ export default App;
 
 결과를 확인해 보세요 콘솔을 켜서 리랜더링이 되는지도 확인 해 보시면 좋을 것 같습니다!
 
-## 결론
-
-지난번 사용한 `createPortal`을 이용하는 것도 좋지만 전역 상태관리 툴을 이용하여 `Modal`을 관리하면 사용성과 가독성이 뛰어난 `modal`을 사용할 수 있으며, `zustand`의 다앙한 기능을 이용할 수 있어서 너무 좋은 학습이었습니다.
-
 <iframe src="https://codesandbox.io/p/devbox/zustand-modal-rmcszz?file=%2Fsrc%2Fcomponents%2Fbasic-modal.tsx&embed=1&showConsole=true"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
      title="zustand modal"
      allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
      sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
    ></iframe>
+
+## 결론
+
+지난번 사용한 `createPortal`을 이용하는 것도 좋지만 전역 상태관리 툴을 이용하여 `Modal`을 관리하면 사용성과 가독성이 뛰어난 `modal`을 사용할 수 있으며, `zustand`의 다앙한 기능을 이용할 수 있어서 너무 좋은 학습이었습니다.
 
 ## 참고 사이트
 
