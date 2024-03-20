@@ -3,10 +3,11 @@ layout: post
 title: react와 react-router V6로 protected 경로 만들기
 date: 2022-03-14 09:33 +0900
 lastmod: 2024-03-19 09:22:13 +0900
+
 categories: [react, typescript]
 tags: [react, react-router-v6, protected-routing]
 image:
-  path: https://res.cloudinary.com/dxesudkxn/image/upload/v1710429822/blog/rdsaeokobe2xjgvi6jqw.gif
+  path: https://res.cloudinary.com/dxesudkxn/image/upload/v1710912176/blog/kpm9llgua3ykrlpusycy.gif
 ---
 
 이전에 사이드 프로젝트를 만든 사이트를 새롭게 리마스터링 하는 과정에서 `protected routing`의 구조가 이상하고 쓰기 불편하다는 느낌이 들어, `react-router v6` 공식 문서와 여러가지 글들을 찾아보고 최적의 방법을 찾아 정리하였습니다.
@@ -61,7 +62,7 @@ const App = () => {
 
 ### Hook 으로 해결하기
 
-위의 과정을
+위의 과정을 `hook`으로 중복을 없애 보았습니다. 중복을 없앴지만 여전히 어떤 컴포넌트에서 사용되는지 확인이 불편했습니다.
 
 ```tsx
 // 훅으로 해결하기
@@ -88,7 +89,9 @@ export default function  = () => {
 
 ### 또 다른 해결 방법
 
-또 다른 해결 방법으로는 `<AuthProvider>`를 사용하여 전체 컴포넌트를 감싸서 `user`값이 없다면 `login` 페이지로 이동시키는 방법이 있을 것 같습니다.
+또 다른 해결 방법으로는 `Context`를 이용하는 방법으로, `<AuthProvider>`를 사용하여 전체 컴포넌트를 감싸서 `user`값이 없다면 `login` 페이지로 이동시키는 방법이 있을 것 같습니다.
+
+이 방법도 상당히 좋은 방법으로, 가독성도 좋고 로그인과 로그아웃 함수를 한번에 관리하기 쉽지만 **어디가 보호되는 페이지이고, 어디가 보호되지 않는지 한 눈에 확인하기 어려웠습니다.**
 
 ```tsx
 // AuthProvider
@@ -118,8 +121,6 @@ export const AuthProvider = ({ children }) => {
 //...
 ```
 
-이 방법도 상당히 좋은 방법으로, 가독성도 좋고 로그인과 로그아웃 함수를 한번에 관리하기 쉽지만, 어디가 보호되는 페이지이고, 어디가 보호되지 않는지 한 눈에 확인하기 어려웠습니다.
-
 ## 문제 해결하기
 
 위의 문제를 해결하기 위해서 `react-router v6` 공식 문서를 찾아보던 도중 객체로 구성된
@@ -131,9 +132,7 @@ export const AuthProvider = ({ children }) => {
 
 또한 `react-router` 공식문서의 예시로는 `return`으로 `redirect` 를 할 수도 있어 다양한 상황에서 응용이 가능합니다.
 
-위의 코드에서 `loader`를 이용하여 페이지를 이동하기 전 유저를 찾고 따라서 이 방법을 활용한다면 `createBrowserRouter`가 선언된 곳에서 `protected routing`을 조작할 수 있고 가독성과 유지보수 두 가지 측면을 모두 잡을 수 있다고 생각 하였습니다.
-
-아래의 사용법을 보면 더욱 이해하기 쉽습니다.
+아래의 기본적인 코드를 보시면 더욱 이해하기 쉽습니다.
 
 ```tsx
 // loader로 데이터 받아오기
@@ -167,7 +166,7 @@ export function App() {
 }
 ```
 
-위의 코드 에서 볼 수 있듯이 `fakeDb`로 부터 받아온 데이터를 `App` 컴포넌트에서 `useLoaderData()`훅을 이용해 쉽게 사용할 수 있습니다.
+사용할 때는 `App` 컴포넌트에서 `useLoaderData()`훅을 이용해 쉽게 사용할 수 있습니다.
 
 ## 우리가 실습할 프로젝트
 
@@ -231,7 +230,10 @@ function getUser() {
 }
 ```
 
-위의 코드에서 `loader`를 이용하여 사용자 유무에 따라 적절한 리다이렉트 경로 혹은 null을 반환하여 사용자의 경로를 보호합니다.
+위의 코드는 다음과 같이 동작합니다.
+
+- `/` 경로로 가기 직전 사용자의 접속 유무를 판단하여 접속 하지 않았다면 `/login` 경로로 리다이렉트 시켜줍니다.
+- `/login` 에서는 이와 반대로 적용시킵니다.
 
 ### Main.tsx 에 라우터 등록하기
 
@@ -349,6 +351,10 @@ export default Login;
 
 ## CodeSandbox에서 결과 확인하기
 
+또는 아래의 사이트에서 결과를 확인하실 수 있습니다
+
+[Demo](https://w5nc47-5173.csb.app/login?id=)
+
 <iframe src="https://codesandbox.io/p/devbox/protected-routing-w5nc47?embed=1&file=%2Fsrc%2FLogin.tsx"
      style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
      title="protected-routing"
@@ -358,7 +364,7 @@ export default Login;
 
 ## 결론
 
-`protected route`를 설정하는 것은 다양한 방법이 있을 수 있겠지만 오늘 제가 소개 해드린 방법은 `createBrowserRouter`를 설정과 동시에 어디가 `protected` 한 경로인지 어디가 `public` 한 경로인지 한번에 알 수 있었기 때문에 가독성과 유지보수성이 좋았습니다.
+protected route를 설정하는 방법은 여러 가지가 있을 수 있습니다. 오늘 소개한 방법은 createBrowserRouter를 사용하여 경로를 설정하면서 동시에 어떤 경로가 protected하고 어떤 경로가 public한지를 한눈에 파악할 수 있는 장점이 있습니다. 이를 통해 코드의 가독성과 유지보수성을 향상시킬 수 있었습니다.
 
 ## 참고 사이트
 
