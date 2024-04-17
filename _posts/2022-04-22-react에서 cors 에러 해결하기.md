@@ -1,6 +1,6 @@
 ---
 layout: post
-title: react에서 debounce 기능 구현하기
+title: react에서 cors 에러 해결하기
 date: 2022-04-22 19:41 +0900
 lastmod: 2024-04-25 11:31:23 +0900
 
