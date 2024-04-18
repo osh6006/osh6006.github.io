@@ -2,7 +2,7 @@
 layout: post
 title: react에서 cors 에러 해결하기
 date: 2022-04-22 19:41 +0900
-lastmod: 2024-04-25 11:31:23 +0900
+lastmod: 2024-04-20 11:31:23 +0900
 
 categories: [react, typescript]
 tags: [react, typescript, cors]
@@ -14,7 +14,7 @@ tags: [react, typescript, cors]
 
 {: .prompt-info }
 
-> 이 글은 **2024-04-20** 에 업데이트 되었습니다.
+> 이 글은 **2024-04-15** 에 업데이트 되었습니다.
 
 {: .prompt-warning }
 
@@ -97,4 +97,4 @@ module.exports = function (app) {
 
 ## 참고 사이트
 
-(https://velog.io/@jh100m1/CORS-%EC%97%90%EB%9F%AC%EA%B0%80-%EB%AD%94%EB%8D%B0-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4%EA%B2%B0%ED%95%98%EB%8A%94%EA%B1%B4%EB%8D%B0)[https://velog.io/@jh100m1/CORS-%EC%97%90%EB%9F%AC%EA%B0%80-%EB%AD%94%EB%8D%B0-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4%EA%B2%B0%ED%95%98%EB%8A%94%EA%B1%B4%EB%8D%B0]
+[https://velog.io/@jh100m1/CORS-%EC%97%90%EB%9F%AC%EA%B0%80-%EB%AD%94%EB%8D%B0-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4%EA%B2%B0%ED%95%98%EB%8A%94%EA%B1%B4%EB%8D%B0](https://velog.io/@jh100m1/CORS-%EC%97%90%EB%9F%AC%EA%B0%80-%EB%AD%94%EB%8D%B0-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4%EA%B2%B0%ED%95%98%EB%8A%94%EA%B1%B4%EB%8D%B0)
