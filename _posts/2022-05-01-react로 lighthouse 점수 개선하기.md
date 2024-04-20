@@ -44,11 +44,11 @@ tags: [react, typescript, Lighthouse]
 
 `Lighthouse`를 실행하면, 선택한 카테고리에 따라 웹사이트를 분석하고, 각 항목에 대한 점수와 함께 개선할 수 있는 구체적인 권장 사항을 제공합니다. 이를 통해 웹 개발자는 자신의 애플리케이션을 최적화하여 더 나은 사용자 경험을 제공할 수 있습니다.
 
-## 개선 전 프로젝트 점수
+## 점수 개선하기
 
 ![개선 전 프로젝트](../assets/imgs/light-house.png)
 
-기존 프로젝트를 `Lighthouse` 점수 측정 결과 성능과 접근성 권장사항 모두 낮은 점수가 나왔습니다. 따라서 `Lighthouse`의 권장사항을 토대로 각각의 항목 점수를 하나씩 개선 하였습니다.
+기존 프로젝트를 `Lighthouse` 점수 측정 결과 성능과 접근성 권장사항 모두 낮은 점수가 나왔습니다. 따라서 `Lighthouse`의 권장사항을 토대로 각각의 항목 점수를 하나씩 개선 하게 되었습니다.
 
 ### 성능(Performance) 개선
 
@@ -66,8 +66,6 @@ tags: [react, typescript, Lighthouse]
 > - **Speed Index**: 페이지의 시각적 로딩 속도를 측정하는 지표입니다. 이는 페이지의 콘텐츠가 얼마나 빨리 화면에 표시되는지를 나타냅니다. Speed Index가 낮을수록 페이지가 더 빠르게 시각적으로 로드되는 것을 의미합니다.
 > - **Total Blocking Time (TBT)**: 페이지가 블록되어 사용자의 입력에 반응하지 않는 시간의 총합입니다. 이는 페이지가 얼마나 부드럽게 로드되는지를 나타내는 지표로 사용됩니다.
 > - **Cumulative Layout Shift (CLS)**: 페이지의 요소가 로드되는 동안 레이아웃이 얼마나 안정적으로 유지되는지를 나타냅니다. 이는 사용자가 페이지를 스크롤하거나 클릭할 때 예상치 못한 레이아웃 변경이 발생하는 정도를 측정합니다.
-
-### Largest Contentful Paint 점수 높이기
 
 #### 이미지 형식 변경
 
@@ -113,8 +111,126 @@ const {
 
 위의 코드는 `isLoading`일 때 스켈레톤 UI를 보여주고 에러와 성공했을 때를 조건부로 보여지게 만들었습니다.
 
-### Cumulative Layout Shift 점수 높이기
+#### react-multi-carousel 성능 문제
+
+또한 현재 사용하고 있던 라이브러리인 `react-multi-carousel` 라이브러리가 `Lighthouse`로 검사를 했을 때 성능적인 부분에서 크게 떨어지는 것으로 나타났었습니다.코드상 해결할 수 있는 부분이 없어 검색결과 성능적으로 가장 뛰어난 `carousel` 인 `embla-carousel-react` 라이브러리를 사용하여 해결하였습니다.
+
+#### 콘텐츠가 포함된 최대 페인트 요소
+
+![최대 페인트요소](https://res.cloudinary.com/dxesudkxn/image/upload/v1713500867/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/imt5dy05xm06daktayxk.png)
+
+마지막 세 번째 문제는 콘텐츠가 포함된 최대 페인트 요소가 늦게 렌더링 된다는 부분이었습니다.
+
+개발하고 있던 프로젝트 `banner` 부분은 홈페이지에서 가장 큰 콘텐츠 영역으로 가장 빨리 로드되어야 하는데, `<LazyLoadComponent>` 라이브러리를 쓰면서 느리게 불러와진 것 같았습니다. 따라서 `banner` 부분에 있는 `<LazyLoadComponent>`부분을 삭제해 주었습니다.
+
+```tsx
+// ...banner.tsx
+
+// <LazyLoadComponents> 삭제
+<section className={styles.embla}>
+  <div className={styles.embla__viewport} ref={emblaRef}>
+    <div className={styles.embla__container}>
+      {banners.map((el) => (
+        <div className={styles.embla__slide} key={el.id}>
+          <img
+            className={styles.embla__slide__img}
+            src={`${BASE_URL}/storage/v1/object/public/spolink/banner_images/${el.name}`}
+            alt="Your alt text"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+// </LazyLoadComponents> 삭제
+```
+
+#### 코드 적용 결과
+
+![성능 점수](https://res.cloudinary.com/dxesudkxn/image/upload/v1713501362/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/htvapo6wkptycwihkpud.png)
+
+`Lighthouse` 가 제시해준 가이드를 토대로 코드를 수정한 결과 기존의 성능점수 69점에서 지금은 94점으로 점수가 개선되었습니다.
 
 ### 접근성 개선
 
-## 전 후 비교
+![접근성 개선 전](https://res.cloudinary.com/dxesudkxn/image/upload/v1713508441/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/kwvyr6gk3fzqcxx67pss.png)
+
+웹 접근성을 고려할 때, 버튼 같은 대화형 요소에 명확하고 구체적인 이름을 제공하는 것은 스크린 리더 사용자나 장애가 있는 사람들에게 시각적 단서를 통해 버튼이나 양식요소의 기능을 추론할 수 없기 때문에, 버튼이나 양식요소의 목적을 설명하는 접근 가능한 이름은 이들에게 각각의 기능을 이해하고 적절히 사용할 수 있도록 돕습니다.
+
+따라서 페이지의 모든 버튼에 `aria-label`이름을 지정해 주었고, `theme`을 바꿔주는 스위치와 `form` 에도 `label`명을 입력해 주었습니다.
+
+```tsx
+// button
+<Button
+  color="main"
+  aria-label="login-btn"
+  onClick={() => nav("/auth")}
+  size="sm"
+>
+  Sign In
+</Button>
+```
+
+```tsx
+// switch
+<div className="flex items-center gap-x-3 text-gray-500">
+  <Sun />
+  <label className="relative inline-flex cursor-pointer items-center">
+    <input
+      type="checkbox"
+      value=""
+      aria-label="theme-switcher"
+      className="peer sr-only"
+      onChange={handleChange}
+      checked={theme === "dark"}
+    />
+    <div
+      className="peer h-6 w-11 rounded-full bg-Main
+        after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full 
+        after:border after:border-gray-300 after:bg-white after:transition-all after:content-['']
+         peer-checked:bg-Main peer-checked:after:translate-x-full peer-checked:after:border-white 
+         peer-focus:ring-4 peer-focus:ring-MainHover rtl:peer-checked:after:-translate-x-full "
+    ></div>
+  </label>
+  <Moon />
+</div>
+```
+
+#### 코드 적용 결과
+
+![](https://res.cloudinary.com/dxesudkxn/image/upload/v1713509742/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/miupadxxn7esvvgzf7xs.png)
+
+접근성을 고려한 코드를 적용한 결과 81점에서 96점으로 점수가 개선 되었습니다.
+
+### 권장 사항 개선
+
+![권장 사항 개선](https://res.cloudinary.com/dxesudkxn/image/upload/v1713510656/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/irum7ouo2hgxaq2kttl6.png)
+
+나라를 선택하는 `select-box` 의 이미지 경로가 `https` 가 아닌 `http`로 경로가 지정되어 있었습니다. 따라서 경로를 `https`로 수정해 주었습니다.
+
+```tsx
+// countries list
+const countries = iso.all().map((el) => {
+  return {
+    ...el,
+    // http를 https로 변경
+    flag: `https://이미지 링크`,
+  };
+});
+```
+
+#### 코드 적용 결과
+
+![결과](https://res.cloudinary.com/dxesudkxn/image/upload/v1713513453/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/oetnkuy5wd2vftseg3u8.png)
+
+젹용결과 78점이던 권장사항 결과가 100점으로 향상되었습니다.
+
+## 최종 개선 결과
+
+![최종 개선 결과](https://res.cloudinary.com/dxesudkxn/image/upload/v1713604100/blog/react%EB%A1%9C%20lighthouse%20%EC%A0%90%EC%88%98%20%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/tul007f58bniifscj5hr.png)
+
+모든 코드를 적용한 결과 이전의 점수보다 꽤 높은 개션 결과를 얻었습니다.
+
+`Lighthouse`는 점수를 제공해줄 뿐만 아니라 어느 부분에서 어떤 문제가 발생하고 있는지 알려주는 효율적인 도구였습니다. 현 프로젝트에서는 아직 크리티컬한 성능 문제는 발생하지 않았지만, 작은 점수 차이가 더 큰 프로젝트에서 성능 문제를 다룰 때 도움이 될 것으로 기대됩니다.
+
+향후 프로젝트에서도 `Lighthouse`와 같은 도구를 활용하여 지속적으로 성능을 모니터링하고 개선해 나갈 것입니다. 이를 통해 사용자들에게 더 나은 웹 경험을 제공할 수 있도록 노력하겠습니다.
