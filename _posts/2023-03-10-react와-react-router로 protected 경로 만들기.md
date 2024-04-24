@@ -1,7 +1,7 @@
 ---
 layout: post
 title: react와 react-router V6로 protected 경로 만들기
-date: 2022-03-14 09:33 +0900
+date: 2023-03-14 09:33 +0900
 lastmod: 2024-03-19 09:22:13 +0900
 
 categories: [react, typescript]

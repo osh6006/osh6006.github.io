@@ -1,7 +1,7 @@
 ---
 layout: post
 title: React와 Zustand로 완벽한 다크모드 만들기 with tailwind, clsx
-date: 2022-02-15 20:57 +0900
+date: 2023-02-15 20:57 +0900
 lastmod: 2024-02-14 15:38:56 +0900
 
 categories: [react]

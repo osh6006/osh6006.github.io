@@ -1,7 +1,7 @@
 ---
 layout: post
 title: react와-zustand로 더 완벽한 modal 만들기
-date: 2022-03-01 16:23 +0900
+date: 2023-03-01 16:23 +0900
 lastmod: 2024-03-14 09:38:13 +0900
 
 categories: [react, typescript]

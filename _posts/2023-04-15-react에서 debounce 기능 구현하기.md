@@ -1,7 +1,7 @@
 ---
 layout: post
 title: react에서 debounce 기능 구현하기
-date: 2022-04-15 13:11 +0900
+date: 2023-04-15 13:11 +0900
 lastmod: 2024-04-20 12:01:33 +0900
 
 categories: [react, typescript]
