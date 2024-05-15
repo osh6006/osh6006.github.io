@@ -202,6 +202,17 @@ import { Input } from "@/components/ui/input";
 </Form>;
 ```
 
+## 결과 확인하기
+
+지금까지 했던 내용은 `codesandbox` 에서 확인하실 수 있습니다.
+
+<iframe src="https://codesandbox.io/p/devbox/youthful-star-r8zcq5?file=%2Fapp%2Fpage.tsx&embed=1"
+     style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="youthful-star"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
+
 ## 결론
 
 새로운 프로젝트를 시작할 때마다 기본적인 컴포넌트를 구현하기 위해 항상 `GitHub`에서 이전에 사용했었던 코드를 찾아 복사해 왔습니다. 그러나 이렇게 구현한 컴포넌트가 정확히 동작하는지 확신할 수 없었고, 또 다양한 컴포넌트를 사용하려면 다시 기본적인 컴포넌트를 구현해야 했습니다. 하지만 `Shad UI`를 사용하면 이제 검증된 컴포넌트 코드를 간편하게 복사하여 내가 필요한 대로 사용할 수 있기 때문에 매우 사용하기 유용했습니다.
