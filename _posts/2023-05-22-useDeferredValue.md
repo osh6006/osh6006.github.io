@@ -49,7 +49,7 @@ function Search() {
 
 ## 사용법
 
-사용법은 매우 간단합니다. `useDeferredValue` 라는 훅을 호출하고 이전에 `state`로 호출 된 값을 넣어주면 됩니다.
+사용법은 매우 간단합니다. `useDeferredValue` 라는 훅을 호출하고 이전에 `state`로 호출 된 값을 넣어주면 됩니다. 단 최 상위에서 호출하고 값을 보낼 때는 자식 컴포넌트에 `props` 로 전달해야 합니다.
 
 ```tsx
 import { useState, useDeferredValue } from "react";
@@ -62,7 +62,12 @@ function SearchPage() {
     setQuery(e.target.value);
   };
 
-  return <input value={query} onChange={handleChange} />;
+  return (
+    <>
+      <input value={query} onChange={handleChange} />
+      <SearchResult searchValue={deferredQuery}>
+    </>
+  );
 }
 ```
 
