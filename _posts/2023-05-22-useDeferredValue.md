@@ -225,3 +225,7 @@ export default SearchResult;
 ## 결론
 
 저의 프로젝트에서는 검색 입력 필드에서 `rapid.api`를 사용하여 데이터를 불러오기 때문에, 불필요한 `API` 요청이 추가 요금으로 이어질 수 있습니다. 따라서 `useDeferredValue`를 사용하기에는 적합하지 않았습니다. 그러나 간단한 내용을 불러오거나, 중요하지 않은 `API` 요청이 없는 경우에는 `useDeferredValue`를 사용하는 것이 좋다는 결론을 내렸습니다.
+
+## 참고 사이트
+
+[https://react.dev/reference/react/useDeferredValue](https://react.dev/reference/react/useDeferredValue)
