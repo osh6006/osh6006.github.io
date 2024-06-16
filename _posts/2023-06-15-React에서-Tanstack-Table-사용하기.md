@@ -416,8 +416,8 @@ export default function App() {
                         header.getContext()
                       )}
                       {{
-                        asc: "업 아이콘",
-                        desc: "다운 아이콘",
+                        asc: "up",
+                        desc: "down",
                       }[header.column.getIsSorted() as string] ?? null}
                     </div>
                   )}
