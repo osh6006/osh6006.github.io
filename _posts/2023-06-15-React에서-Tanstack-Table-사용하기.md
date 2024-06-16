@@ -585,8 +585,137 @@ function DebouncedInput({
 
 ### 페이지 네이션
 
-데이터 테이블은 주로 모바일 보다는 데스크탑에서 많이 사용하고 있기 때문에 데이터가 많을 경우 페이지네이션을 사용하여 구현합니다. `tanstack-table` 에서 페이지 네이션을 구현하려면
+데이터 테이블은 주로 모바일 보다는 데스크탑에서 많이 사용하고 있기 때문에 데이터가 많을 경우 페이지네이션을 사용하여 구현합니다. `tanstack-table` 에서 페이지 네이션을 구현하려면 `App.tsx`에 `state`로 페이지네이션 상태를 구현합니다.
+
+```tsx
+const [pagination, setPagination] = useState<PaginationState>({
+  pageIndex: 0,
+  pageSize: 10,
+});
+```
+
+그리고 `usetable`에 `pagination` 과 `getPaginationRowModel`, `onPaginationChange` 상태를 추가합니다.
+
+```tsx
+const table = useReactTable({
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getSortedRowModel: getSortedRowModel(),
+  onSortingChange: setSorting,
+  state: {
+    sorting,
+    globalFilter,
+    pagination, // 추가
+  },
+  globalFilterFn: "auto",
+  onGlobalFilterChange: setGlobalFilter,
+  getPaginationRowModel: getPaginationRowModel(), // 추가
+  onPaginationChange: setPagination, // 추가
+});
+```
+
+다음으로 페이지네이션을 생성하는 함수를 만들어 줍니다. 페이지 네이션을 생성하는 함수는
+`useTable`에서 제공하는 다양한 변수 및 메소드를 이용하여
+
+```tsx
+// 페이지 번호를 생성하는 함수
+const pageNumbers = () => {
+  const totalPageCount = table.getPageCount();
+  const pageIndex = table.getState().pagination.pageIndex;
+  const pageRange = 5;
+
+  let startPage = Math.max(0, pageIndex - pageRange);
+  let endPage = Math.min(totalPageCount - 1, pageIndex + pageRange);
+
+  if (pageIndex < pageRange) {
+    endPage = Math.min(totalPageCount - 1, startPage + 2 * pageRange);
+  }
+
+  if (pageIndex > totalPageCount - pageRange - 1) {
+    startPage = Math.max(0, endPage - 2 * pageRange);
+  }
+
+  return Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
+};
+
+// 50개의 데이터가 10개씩 있으므로
+// [0, 1, 2, 3, 4] 페이지번호가 생성됩니다.
+```
+
+마지막으로 테이블의 아래쪽에 페이지네이션 버튼을 추가해 줍니다. 페이지 네이션 버튼은 `useTable`을 활용하여 이동버튼을 아까 생성했었던 `pageNumbers` 의 변수를 활용하여 페이지 번호 버튼을 생성해 줍니다.
+
+```tsx
+// ....이 위는 테이블 압나다
+
+<div className="flex items-center gap-2">
+  <button
+    className="border rounded p-1"
+    onClick={() => table.setPageIndex(0)}
+    disabled={!table.getCanPreviousPage()}
+  >
+    {"<<"}
+  </button>
+  <button
+    className="border rounded p-1"
+    onClick={() => table.previousPage()}
+    disabled={!table.getCanPreviousPage()}
+  >
+    {"<"}
+  </button>
+  {/* 페이지 번호 버튼 추가 */}
+  {pageNumbers().map((page) => (
+    <button
+      key={page}
+      className={`border rounded p-1 ${
+        page === table.getState().pagination.pageIndex ? "bg-gray-200" : ""
+      }`}
+      onClick={() => table.setPageIndex(page)}
+    >
+      {page + 1}
+    </button>
+  ))}
+  <button
+    className="border rounded p-1"
+    onClick={() => table.nextPage()}
+    disabled={!table.getCanNextPage()}
+  >
+    {">"}
+  </button>
+  <button
+    className="border rounded p-1"
+    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+    disabled={!table.getCanNextPage()}
+  >
+    {">>"}
+  </button>
+
+  {/* 몇 페이지 인지 확인*/}
+  <span className="flex items-center gap-1">
+    <div>Page</div>
+    <strong>
+      {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+    </strong>
+  </span>
+</div>
+```
+
+## 전체 코드 확인하기
+
+전체적인 코드는 아래의 `codesandbox`에서 확인이 가능합니다. 직접 데이터를 조작해 보고 콘솔을 확인하면서 어떤 값이 들어오는지 확인해 보세요
+
+<iframe src="https://codesandbox.io/embed/7kykhq?view=preview&module=%2Fsrc%2FApp.tsx&expanddevtools=1"
+     style="width:100%; height: 500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="react-tanstack-table-exam"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
 
 ## 결론
 
-제가 개인 프로젝트에 적용해본 기능은 위와 같이 적용해 보았습니다. 하지만 `tanstack-table`에서는 이보다 더 많은 기능 및 예제들이 아주 친절하게 적혀 있기 때문에 이 예제를 보고 기본 기능을 구현해 보고 더 기능을 추가하려면 아래의 공식 홈페이지에가서 추가할 기능을 확인해 보시기 바랍니다.
+제가 개인 프로젝트에 적용해본 기능은 정렬, 필터링 검색, 페이지네이션입니다. 그러나 tanstack-table에서는 이보다 더 많은 기능과 예제들이 아주 친절하게 설명되어 있기 때문에, 이 예제를 보고 기본 기능을 구현한 후 추가적인 기능이 필요하다면 아래의 공식 문서를 참고하여 추가할 기능을 확인해 보시기 바랍니다.
+
+[https://tanstack.com/table/v8](https://tanstack.com/table/v8)
