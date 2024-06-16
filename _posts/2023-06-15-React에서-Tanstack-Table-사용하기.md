@@ -415,10 +415,9 @@ export default function App() {
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                      {{
-                        asc: "up",
-                        desc: "down",
-                      }[header.column.getIsSorted() as string] ?? null}
+                      {/*
+                    업아이콘과 다운 아이콘등을 등록 가능
+                      */}
                     </div>
                   )}
                 </th>
@@ -516,10 +515,9 @@ export default function App() {
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                      {{
-                        asc: "업 아이콘",
-                        desc: "다운 아이콘",
-                      }[header.column.getIsSorted() as string] ?? null}
+                      {/*
+                    업아이콘과 다운 아이콘등을 등록 가능
+                      */}
                     </div>
                   )}
                 </th>
