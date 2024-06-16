@@ -416,8 +416,8 @@ export default function App() {
                         header.getContext()
                       )}
                       {{
-                        asc: " 🔼",
-                        desc: " 🔽",
+                        asc: "업 아이콘",
+                        desc: "다운 아이콘",
                       }[header.column.getIsSorted() as string] ?? null}
                     </div>
                   )}
@@ -517,8 +517,8 @@ export default function App() {
                         header.getContext()
                       )}
                       {{
-                        asc: " 🔼",
-                        desc: " 🔽",
+                        asc: "업 아이콘",
+                        desc: "다운 아이콘",
                       }[header.column.getIsSorted() as string] ?? null}
                     </div>
                   )}
