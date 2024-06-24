@@ -4,7 +4,7 @@ title: Nextjs 에서 fetch 사용하여 데이터 가져오기
 date: 2024-03-04 14:13 +0900
 lastmod: 2024-03-04 12:31:23 +0900
 categories: [nextjs, typescript]
-tags: [next, typescript, shadcn-ui]
+tags: [next, typescript, fetch]
 image:
   path: https://nextjs.org/_next/image?url=%2Fstatic%2Fblog%2Fnext-15-rc%2Fcreate-next-app-dark.png&w=2048&q=75
 ---
