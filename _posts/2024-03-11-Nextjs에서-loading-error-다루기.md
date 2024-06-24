@@ -6,7 +6,7 @@ lastmod: 2024-03-11 12:31:23 +0900
 categories: [nextjs, typescript]
 tags: [next, typescript, error, loading]
 image:
-  path: https://nextjs.org/_next/image?url=%2Fstatic%2Fblog%2Fnext-15-rc%2Fcreate-next-app-dark.png&w=2048&q=75
+  path: https://res.cloudinary.com/dxesudkxn/image/upload/v1719247840/blog/bqyejkdxyba7zxjhrojq.gif
 ---
 
 팀 프로젝트를 진행하던 도중 `Next.js`에서는 `React`와는 다르게 페이지 단위 로딩을 쉽게 구현할 수 있는 사실을 공식 문서에서 확인할 수 있었습니다. 또한 에러 처리를 할 수 있는 코드도 `React` 와는 다르게 쉽게 작성할 수 있기 때문에 오늘은 에러처리와 로딩을 어떻게 사용하는지 간단한 사용법과 프로젝트를 만들어 보겠습니다.
