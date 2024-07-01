@@ -4,7 +4,7 @@ title: 쿠키에 대해서 자세히 알아보기 (With Next.js)
 date: 2024-03-20 12:13 +0900
 lastmod: 2024-06-24 13:31:23 +0900
 categories: [nextjs, typescript]
-tags: [next, typescript, fetch]
+tags: [next, typescript, cookie]
 image:
   path: https://nextjs.org/_next/image?url=%2Fstatic%2Fblog%2Fnext-15-rc%2Fcreate-next-app-dark.png&w=2048&q=75
 ---
