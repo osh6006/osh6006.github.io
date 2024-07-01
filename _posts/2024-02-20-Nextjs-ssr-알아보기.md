@@ -88,6 +88,101 @@ export default async function Page() {
 }
 ```
 
+**Incremental-Static-Regeneration : ISR**
+
+Dynamic Rendering은 **특정 시간이 지나면 data가 업데이트 되었는지 확인**하고 만약 **업데이트가 되었다면 새로운 data를 가진 페이지를 생성**하여 보여주는 ISR 방식도 사용할 수 있습니다.
+
+아래의 코드와 같이 `{ next: { revalidate: 10}` 옵션을 준다면 Next.js는 10초마다 새로운 데이터를 가진 페이지를 빌드하여 보여줍니다.
+
+ISR 방식은 블로그와 같이 컨텐츠가 동적이지만 자주 변경되지 않는 사이트인 경우 ISR 방식을 사용하면 유용합니다.
+
+```tsx
+async function getData() {
+  const res = await fetch("https://api.example.com/...", {
+    next: { revalidate: 10 },
+  });
+  return res.json();
+}
+
+export default async function Page() {
+  const data = await getData();
+  return <></>;
+}
+```
+
 #### Streaming
 
+![스트리밍](https://nextjs.org/_next/image?url=%2Fdocs%2Fdark%2Fserver-rendering-with-streaming.png&w=3840&q=75)
+
+Streaming은 서버에서 **전체 페이지가 렌더링될 때까지 기다리지 않고** 웹 페이지의 HTML **콘텐츠를 청크로 브라우저에 점진적으로 전달**할 수 있습니다. 이를 통해 사용자는 페이지의 일부를 더 빨리 볼 수 있습니다. 위의 이미지 처럼 정적인 부분은 미리 보여지게되고 데이터 로딩이 필요한 컴포넌트의 경우 대체 UI로 화면에 표시할 수 있습니다.
+
+스트리밍은 `loading.tsx` 파일을 이용한 페이지 수준 스트리밍이 있고, React의 Suspense를 이용한 컴포넌트 스트리밍이 있습니다.
+
+##### 페이지 레벨 스트리밍
+
+```
+└── app/
+    └── dashboard/
+        ├── loading.tsx
+        └── page.tsx
+```
+
+위와 같은 경로로 페이지를 구성했다고 했을 때 만약에 `dashboard` 페이지에서 데이터 로딩이 오래 걸리는 경우 대체 UI로 `loadind.tsx` 파일에 있는 로딩 UI를 보여줄 수 있습니다.
+
+```tsx
+// loading.tsx
+export default function Loading() {
+  return <div>Loading...</div>;
+}
+```
+
+##### 컴포넌트 스트리밍
+
+컴포넌트 레벨 스트리밍은 아래의 코드와 같이 `Suspense`로 ServerComponent 를 감싸고 `fallback` 으로 대체 UI를 전달하면 됩니다.
+
+```tsx
+export default async function Page() {
+  return (
+    <main>
+      <div>
+        <Suspense fallback={<div>Loading...</div>}>
+          <RevenueChart />
+        </Suspense>
+      </div>
+    </main>
+  );
+}
+```
+
 ### Client Components
+
+클라이언트 컴포넌트는 Client Side Rendering을 사용하며, 서버에서 미리 렌더링된 HTML을 제공하지 않고 클라이언트에서 HTML, CSS, JS등 모든 데이터를 받은 후 렌더링하는 방식입니다. 하지만 Next.js는 이미 **모든 클라이언트 및 서버 컴포넌트를 pre-rendering** 하기 때문에 유저는 **기다릴 필요 없이 페이지의 콘텐츠를 즉시 볼** 수 있습니다.
+
+주로 상태, 표과, 이벤트 리스너를 사용할 수 있으므로 **유저와 즉각적인 UI를 업데이트**할 수 있을 때나 지리적 위치, 로컬스토리지 등 **브라우저 API를 직접적으로 사용**할 때 유용하게 사용할 수 있습니다.
+
+클라이언트 컴포넌트를 사용하려면 파일의 가장 최상단에 `use client` 키워드를 작성해야 합니다.
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
+
+## 결론
+
+Next.js 의 가장 큰 장점은 요구사항에 따라 적절한 렌더링 전략을 선택할 수 있다는 것 이었습니다. **정적 콘텐츠가 많은 경우 Static Rendering**이, **사용자 맞춤형 데이터가 많은 경우 Dynamic Rendering**이, **사용자 상호작용이 빈번한 경우 Client Components**가 적합합니다.
+
+이러한 전략들을 적절히 활용하면 Next.js를 통해 렌더링을 최적화하여 사용자 경험을 향상시킬 수 있습니다.
+
+## 참고 사이트
